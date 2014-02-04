@@ -7,16 +7,16 @@ if (!defined('TYPO3_MODE')) {
 
 $tmp_roq_newsevent_columns = array(
 
-    'tx_roqnewsevent_is_event' => array(
-   		'exclude' => 0,
-   		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_is_event',
-   		'config' => array(
-   			'type' => 'check',
-   			'default' => 0
-   		),
-   	),
+	'tx_roqnewsevent_is_event' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_is_event',
+		'config' => array(
+			'type' => 'check',
+			'default' => 0,
+		),
+	),
 	'tx_roqnewsevent_startdate' => array(
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_startdate',
 		'config' => array(
 			'type' => 'input',
@@ -26,7 +26,7 @@ $tmp_roq_newsevent_columns = array(
 		),
 	),
 	'tx_roqnewsevent_starttime' => array(
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_starttime',
 		'config' => array(
 			'type' => 'input',
@@ -36,7 +36,7 @@ $tmp_roq_newsevent_columns = array(
 		),
 	),
 	'tx_roqnewsevent_enddate' => array(
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_enddate',
 		'config' => array(
 			'type' => 'input',
@@ -46,7 +46,7 @@ $tmp_roq_newsevent_columns = array(
 		),
 	),
 	'tx_roqnewsevent_endtime' => array(
-		'exclude' => 0,
+		'exclude' => 1,
 		'label' => 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_db.xml:tx_roqnewsevent_endtime',
 		'config' => array(
 			'type' => 'input',
