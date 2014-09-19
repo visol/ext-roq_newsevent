@@ -1,4 +1,4 @@
-BEGIN:VCALENDAR<e:format.trim replaceDoubleSpaces="FALSE">
+BEGIN:VCALENDAR<e:format.trim replaceDoubleSpaces="FALSE" useWindowsLineEndings="TRUE" removeNewlineTags="TRUE">
 
     {namespace n=Tx_News_ViewHelpers}
     {namespace e=Tx_RoqNewsevent_ViewHelpers}
@@ -13,4 +13,4 @@ BEGIN:VCALENDAR<e:format.trim replaceDoubleSpaces="FALSE">
 
         </f:for>
     </f:if>
-</e:format.trim>
+END:VCALENDAR</e:format.trim>
