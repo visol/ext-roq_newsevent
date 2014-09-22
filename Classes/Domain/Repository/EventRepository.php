@@ -39,7 +39,14 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends Tx_News_Domain_R
                 $query->lessThan('tx_roqnewsevent_startdate + tx_roqnewsevent_starttime', $timestamp),
                 $query->greaterThan('tx_roqnewsevent_startdate + tx_roqnewsevent_endtime', $timestamp),
                 $query->equals('tx_roqnewsevent_enddate', 0)
-            )
+            ),
+            // current single day event without time:
+            $query->logicalAnd(
+				$query->greaterThan('tx_roqnewsevent_startdate + 86399', $timestamp),
+				$query->equals('tx_roqnewsevent_starttime', 0),
+				$query->equals('tx_roqnewsevent_enddate', 0),
+				$query->equals('tx_roqnewsevent_endtime', 0)
+			)
         );
 
         return $constraint;
