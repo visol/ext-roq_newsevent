@@ -184,6 +184,8 @@ class Tx_RoqNewsevent_Controller_EventController extends Tx_News_Controller_News
             'news' => $newsRecords,
             'overwriteDemand' => $overwriteDemand,
         ));
+
+		Tx_News_Utility_Cache::addPageCacheTagsByDemandObject($demand);
     }
 
     /**
@@ -222,6 +224,9 @@ class Tx_RoqNewsevent_Controller_EventController extends Tx_News_Controller_News
         ));
 
         Tx_News_Utility_Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
+		if ($event instanceof Tx_RoqNewsevent_Domain_Model_Event) {
+			Tx_News_Utility_Cache::addCacheTagsByNewsRecords(array($event));
+		}
     }
 }
 
