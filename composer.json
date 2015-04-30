@@ -1,0 +1,7 @@
+{
+	"name": "visol/roq-newsevent",
+	"type": "typo3-cms-extension",
+	"description": "News event",
+	"homepage": "https://github.com/visol/roq_newsevent",
+	"license": ["GPL-2.0+"]
+}
