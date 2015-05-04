@@ -3,5 +3,8 @@
 	"type": "typo3-cms-extension",
 	"description": "News event",
 	"homepage": "https://github.com/visol/roq_newsevent",
-	"license": ["GPL-2.0+"]
+	"license": ["GPL-2.0+"],
+	"require": {
+		"georgringer/news": ">=3.1.0,<=3.99.99"
+	}
 }
