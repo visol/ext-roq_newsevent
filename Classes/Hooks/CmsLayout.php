@@ -28,7 +28,7 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_Roqnewsevent_Hooks_CmsLayout extends Tx_News_Hooks_CmsLayout {
+class Tx_Roqnewsevent_Hooks_CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView {
 
 	/**
 	 * Path to the locallang file

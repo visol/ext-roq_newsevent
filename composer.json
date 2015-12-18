@@ -5,6 +5,6 @@
 	"homepage": "https://github.com/visol/roq_newsevent",
 	"license": ["GPL-2.0+"],
 	"require": {
-		"typo3-ter/news": ">=3.1.0,<=3.99.99"
+		"news": ">=3.2.0,<=3.99.99"
 	}
 }

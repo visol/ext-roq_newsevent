@@ -13,7 +13,7 @@
  * @subpackage roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_RoqNewsevent_Controller_EventController extends Tx_News_Controller_NewsController {
+class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Controller\NewsController {
 
 	/**
 	 * eventRepository
