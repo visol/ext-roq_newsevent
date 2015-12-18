@@ -34,7 +34,7 @@
  * @subpackage News event
  *
  */
-class Tx_RoqNewsevent_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+class Tx_RoqNewsevent_Domain_Model_EventTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
      * @var Tx_RoqNewsevent_Domain_Model_Event
@@ -152,5 +152,3 @@ class Tx_RoqNewsevent_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseT
     }
 
 }
-
-?>

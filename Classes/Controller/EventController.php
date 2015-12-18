@@ -7,6 +7,7 @@
  * @file:           EventController.php
  * @description:    News event Controller, extending functionality from the News Controller
  */
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @package TYPO3
@@ -45,13 +46,13 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
      * Overrides setViewConfiguration: Use event view configuration instead of news view configuration if an event
      * controller action is used
      *
-     * @param Tx_Extbase_MVC_View_ViewInterface $view
+     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
      * @return void
      */
-    protected function setViewConfiguration(Tx_Extbase_MVC_View_ViewInterface $view)
+    protected function setViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
     {
         $extbaseFrameworkConfiguration =
-            $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
         // Fetch the current controller action which is set in the news plugin
         $controllerConfigurationAction = implode(';',
@@ -73,33 +74,32 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
     /**
      * Override templateRootPath, layoutRootPath and/or partialRootPath of the news view with event specific settings
      *
-     * @param Tx_Extbase_MVC_View_ViewInterface $view
-     * @param array $extbaseFrameworkConfiguration
+     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
      * @return void
      */
-    protected function setEventViewConfiguration(Tx_Extbase_MVC_View_ViewInterface $view)
+    protected function setEventViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
     {
         // Template Path Override
         $extbaseFrameworkConfiguration =
-            $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
         if (isset($extbaseFrameworkConfiguration['view']['event']['templateRootPath'])
             && strlen($extbaseFrameworkConfiguration['view']['event']['templateRootPath']) > 0
             && method_exists($view, 'setTemplateRootPath')
         ) {
-            $view->setTemplateRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['templateRootPath']));
+            $view->setTemplateRootPath(GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['templateRootPath']));
         }
         if (isset($extbaseFrameworkConfiguration['view']['event']['layoutRootPath'])
             && strlen($extbaseFrameworkConfiguration['view']['event']['layoutRootPath']) > 0
             && method_exists($view, 'setLayoutRootPath')
         ) {
-            $view->setLayoutRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['layoutRootPath']));
+            $view->setLayoutRootPath(GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['layoutRootPath']));
         }
         if (isset($extbaseFrameworkConfiguration['view']['event']['partialRootPath'])
             && strlen($extbaseFrameworkConfiguration['view']['event']['partialRootPath']) > 0
             && method_exists($view, 'setPartialRootPath')
         ) {
-            $view->setPartialRootPath(t3lib_div::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['partialRootPath']));
+            $view->setPartialRootPath(GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['event']['partialRootPath']));
         }
     }
 
@@ -107,7 +107,7 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
      * Create the demand object which define which records will get shown
      *
      * @param array $settings
-     * @return Tx_News_Domain_Model_NewsDemand
+     * @return \GeorgRinger\News\Domain\Model\Dto\NewsDemand
      */
     protected function eventCreateDemandObjectFromSettings($settings)
     {
@@ -143,7 +143,7 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
         }
 
         if ($settings['event']['startingpoint']) {
-            $demand->setStoragePage(Tx_News_Utility_Page::extendPidListByChildren($settings['event']['startingpoint'],
+            $demand->setStoragePage(\GeorgRinger\News\Utility\Page::extendPidListByChildren($settings['event']['startingpoint'],
                     $settings['recursive']));
         }
 
@@ -197,7 +197,7 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
             'overwriteDemand' => $overwriteDemand,
         ));
 
-        Tx_News_Utility_Cache::addPageCacheTagsByDemandObject($demand);
+        \GeorgRinger\News\Utility\Cache::addPageCacheTagsByDemandObject($demand);
     }
 
     /**
@@ -236,11 +236,10 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
             'currentPage' => (int)$currentPage,
         ));
 
-        Tx_News_Utility_Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
+        \GeorgRinger\News\Utility\Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
         if ($event instanceof Tx_RoqNewsevent_Domain_Model_Event) {
-            Tx_News_Utility_Cache::addCacheTagsByNewsRecords(array($event));
+            \GeorgRinger\News\Utility\Cache::addCacheTagsByNewsRecords(array($event));
         }
     }
 }
 
-?>

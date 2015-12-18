@@ -22,7 +22,7 @@
 
 /**
  * This view helper implements an if/else condition.
- * @see Tx_Fluid_Core_Parser_SyntaxTree_ViewHelperNode::convertArgumentValue() to find see how boolean arguments are evaluated
+ * @see \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode::convertArgumentValue() to find see how boolean arguments are evaluated
  *
  * = Conditions =
  *
@@ -98,7 +98,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractConditionViewHelper
+class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
 {
 
     public function initializeArguments()
@@ -110,6 +110,7 @@ class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_
     /**
      * renders <f:then> child if $condition is true, otherwise renders <f:else> child.
      *
+     * @throws Exception
      * @return string the rendered string
      * @author Sebastian Kurfürst <sebastian@typo3.org>
      * @author Bastian Waidelich <bastian@typo3.org>
@@ -147,7 +148,7 @@ class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_
                     if ($condition instanceof stdClass) {
                         return $this->renderThenChild();
                     } else {
-                        $access = t3lib_div::makeInstance('Tx_Extbase_Reflection_ObjectAccess');
+                        $access = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ObjectAccess');
                         $propertiesCount = count($access->getGettableProperties($condition));
                         if ($propertiesCount > 0) {
                             return $this->renderThenChild();
@@ -190,5 +191,3 @@ class Tx_RoqNewsevent_ViewHelpers_IfViewHelper extends Tx_Fluid_Core_ViewHelper_
         }
     }
 }
-
-?>

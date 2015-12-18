@@ -28,7 +28,7 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper
+class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     /**
@@ -38,6 +38,7 @@ class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_Vi
      * @param string $format Format String which is taken to format the Date/Time
      * @param bool $currentDate if true, the current date is used
      * @param bool $strftime if true, the strftime is used instead of date()
+     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      * @return string Formatted date
      */
     public function render($date = null, $format = '%Y-%m-%d', $currentDate = false, $strftime = true)
@@ -60,7 +61,7 @@ class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_Vi
             try {
                 $date = new DateTime($date);
             } catch (Exception $exception) {
-                throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $date . '" could not be parsed by DateTime constructor.',
+                throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $date . '" could not be parsed by DateTime constructor.',
                     1241722579);
             }
         }
@@ -72,5 +73,3 @@ class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends Tx_Fluid_Core_Vi
         }
     }
 }
-
-?>

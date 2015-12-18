@@ -34,7 +34,7 @@
  * @subpackage News event
  *
  */
-class Tx_Roq_newsevent_Controller_EventControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+class Tx_Roq_newsevent_Controller_EventControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
      * @var Tx_RoqNewsevent_Domain_Model_Event
@@ -60,5 +60,3 @@ class Tx_Roq_newsevent_Controller_EventControllerTest extends Tx_Extbase_Tests_U
     }
 
 }
-
-?>

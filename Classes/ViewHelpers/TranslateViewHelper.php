@@ -27,5 +27,3 @@ class Tx_RoqNewsevent_ViewHelpers_TranslateViewHelper extends \TYPO3\CMS\Fluid\V
         return $value;
     }
 }
-
-?>

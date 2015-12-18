@@ -84,7 +84,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper
+class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     /**
@@ -92,6 +92,7 @@ class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_Vi
      *
      * @param mixed $time either a DateTime object or a string that is accepted by DateTime constructor
      * @param string $format Format String which is taken to format the Date/Time
+     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      * @return string Formatted time
      */
     public function render($time = null, $format = 'H:i:s')
@@ -110,7 +111,7 @@ class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_Vi
             try {
                 $time = new DateTime($time);
             } catch (Exception $exception) {
-                throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $time . '" could not be parsed by DateTime constructor.',
+                throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $time . '" could not be parsed by DateTime constructor.',
                     1241722579);
             }
         }
@@ -121,5 +122,3 @@ class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_Vi
         return date($format, $timeStamp - $timeZoneOffset);
     }
 }
-
-?>

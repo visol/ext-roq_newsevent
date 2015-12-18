@@ -20,11 +20,11 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
      * Returns the constraint to determine if a news event is active or not (archived)
      *
      * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @return Tx_Extbase_Persistence_QOM_Constraint $constraint
+     * @return \TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface $constraint
      */
     protected function createIsActiveConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query)
     {
-        /** @var $constraint Tx_Extbase_Persistence_QOM_Constraint */
+        /** @var $constraint \TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface */
         $constraint = null;
         $timestamp = time(); // + date('Z');
 
@@ -219,5 +219,3 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
         return $constraints;
     }
 }
-
-?>

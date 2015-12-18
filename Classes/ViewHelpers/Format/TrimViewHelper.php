@@ -12,7 +12,7 @@ define('CR', "\r");          // Carriage Return: Mac
 define('LF', "\n");          // Line Feed: Unix
 define('CRLF', "\r\n");      // Carriage Return and Line Feed: Windows
 
-class Tx_RoqNewsevent_ViewHelpers_Format_TrimViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper
+class Tx_RoqNewsevent_ViewHelpers_Format_TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     /**
@@ -59,5 +59,3 @@ class Tx_RoqNewsevent_ViewHelpers_Format_TrimViewHelper extends Tx_Fluid_Core_Vi
 
     }
 }
-
-?>

@@ -244,5 +244,3 @@ class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\
     }
 
 }
-
-?>
