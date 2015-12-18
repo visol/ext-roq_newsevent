@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\Controller;
 
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
@@ -7,6 +8,7 @@
  * @file:           EventController.php
  * @description:    News event Controller, extending functionality from the News Controller
  */
+use Roquin\RoqNewsevent\Domain\Model\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -14,13 +16,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @subpackage roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Controller\NewsController
+class EventController extends \GeorgRinger\News\Controller\NewsController
 {
 
     /**
      * eventRepository
      *
-     * @var Tx_RoqNewsevent_Domain_Repository_EventRepository
+     * @var \Roquin\RoqNewsevent\Domain\Repository\EventRepository
      * @inject
      */
     protected $eventRepository;
@@ -203,11 +205,11 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
     /**
      * Single view of a news event record
      *
-     * @param Tx_RoqNewsevent_Domain_Model_Event $event
+     * @param Event $event
      * @param integer $currentPage current page for optional pagination
      * @return void
      */
-    public function eventDetailAction(Tx_RoqNewsevent_Domain_Model_Event $event = null, $currentPage = 1)
+    public function eventDetailAction(Event $event = null, $currentPage = 1)
     {
         $this->settings = $this->initializeSettings($this->settings);
 
@@ -237,7 +239,7 @@ class Tx_RoqNewsevent_Controller_EventController extends \GeorgRinger\News\Contr
         ));
 
         \GeorgRinger\News\Utility\Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
-        if ($event instanceof Tx_RoqNewsevent_Domain_Model_Event) {
+        if ($event instanceof Event) {
             \GeorgRinger\News\Utility\Cache::addCacheTagsByNewsRecords(array($event));
         }
     }

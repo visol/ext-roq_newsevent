@@ -1,4 +1,6 @@
 <?php
+namespace Roquin\RoqNewsevent\ViewHelpers\Format;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +30,7 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     /**
@@ -57,10 +59,10 @@ class Tx_RoqNewsevent_ViewHelpers_Format_DateViewHelper extends \TYPO3\CMS\Fluid
                 return '';
             }
         }
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof \DateTime) {
             try {
-                $date = new DateTime($date);
-            } catch (Exception $exception) {
+                $date = new \DateTime($date);
+            } catch (\Exception $exception) {
                 throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $date . '" could not be parsed by DateTime constructor.',
                     1241722579);
             }

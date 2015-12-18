@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\Tests\Unit\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -24,7 +25,7 @@
  ***************************************************************/
 
 /**
- * Test case for class Tx_Roq_newsevent_Controller_EventController.
+ * Test case for class \Roquin\RoqNewsevent\Controller\EventController
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
@@ -34,16 +35,16 @@
  * @subpackage News event
  *
  */
-class Tx_Roq_newsevent_Controller_EventControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class EventControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
-     * @var Tx_RoqNewsevent_Domain_Model_Event
+     * @var \Roquin\RoqNewsevent\Domain\Model\Event
      */
     protected $fixture;
 
     public function setUp()
     {
-        $this->fixture = new Tx_RoqNewsevent_Domain_Model_Event();
+        $this->fixture = new \Roquin\RoqNewsevent\Domain\Model\Event();
     }
 
     public function tearDown()

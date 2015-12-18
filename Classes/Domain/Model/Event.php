@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -24,13 +25,10 @@
  ***************************************************************/
 
 /**
- *
- *
  * @package roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\News
+class Event extends \GeorgRinger\News\Domain\Model\News
 {
 
     /**

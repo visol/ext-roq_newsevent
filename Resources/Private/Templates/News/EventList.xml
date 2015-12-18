@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-{namespace n=Tx_News_ViewHelpers}
-{namespace e=Tx_RoqNewsevent_ViewHelpers}
+{namespace n=GeorgRinger\News\ViewHelpers}
+{namespace e=Roquin\RoqNewsevent\ViewHelpers}
 
 <rss version="2.0">
 	<channel>

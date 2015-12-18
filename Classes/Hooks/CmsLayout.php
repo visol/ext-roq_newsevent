@@ -1,4 +1,6 @@
 <?php
+namespace Roquin\RoqNewsevent\Hooks;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -28,7 +30,7 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_Roqnewsevent_Hooks_CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView
+class CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView
 {
 
     /**

@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\ViewHelpers;
 
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
@@ -7,13 +8,13 @@
  * @file:           EventLinkViewHelper.php
  * @description:    ViewHelper to render proper links for event detail view
  */
-class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_LinkViewHelper
+class LinkViewHelper extends \GeorgRinger\News\ViewHelpers\LinkViewHelper
 {
 
     /**
      * Render link to news item or internal/external pages
      *
-     * @param Tx_RoqNewsevent_Domain_Model_Event $newsItem current news object
+     * @param \Roquin\RoqNewsevent\Domain\Model\Event $newsItem current news object
      * @param array $settings
      * @param boolean $uriOnly return only the url without the a-tag
      * @param array $configuration optional typolink configuration
@@ -21,7 +22,7 @@ class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_Lin
      * @return string $link
      */
     public function render(
-        Tx_RoqNewsevent_Domain_Model_Event $newsItem,
+        \Roquin\RoqNewsevent\Domain\Model\Event $newsItem,
         array $settings = array(),
         $uriOnly = false,
         $configuration = array()

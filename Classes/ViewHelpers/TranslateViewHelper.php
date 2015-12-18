@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\ViewHelpers;
 
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
@@ -7,7 +8,7 @@
  * @file:           EventController.php
  * @description:    Translate view helper, extending the fluid translate viewhelper
  */
-class Tx_RoqNewsevent_ViewHelpers_TranslateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\TranslateViewHelper
+class TranslateViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\TranslateViewHelper
 {
 
     /**

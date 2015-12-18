@@ -1,4 +1,5 @@
 <?php
+namespace Roquin\RoqNewsevent\Domain\Repository;
 
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
@@ -13,7 +14,7 @@
  * @subpackage roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News\Domain\Repository\NewsRepository
+class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
 {
 
     /**

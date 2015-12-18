@@ -1,4 +1,6 @@
 <?php
+namespace Roquin\RoqNewsevent\ViewHelpers\Format;
+
 /**
  * Copyright (c) 2012, ROQUIN B.V. (C), http://www.roquin.nl
  *
@@ -12,7 +14,7 @@ define('CR', "\r");          // Carriage Return: Mac
 define('LF', "\n");          // Line Feed: Unix
 define('CRLF', "\r\n");      // Carriage Return and Line Feed: Windows
 
-class Tx_RoqNewsevent_ViewHelpers_Format_TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 {
 
     /**

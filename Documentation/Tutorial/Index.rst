@@ -68,7 +68,7 @@ typo3/sysext/fluid/Classes/ViewHelpers/Link/PageViewHelper.php.
 
 Any other ViewHelper from other extensions can be used by using a namespace declaration like::
 
-    {namespace e=Tx_RoqNewsevent_ViewHelpers}
+    {namespace e=Roquin\RoqNewsevent\ViewHelpers}
 
 Then ViewHelpers of EXT:RoqNewsevent (which can be found in roq_newsevent/Classes/ViewHelpers) can be used with
 the prefix e:.

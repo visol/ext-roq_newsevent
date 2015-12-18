@@ -1,5 +1,5 @@
-{namespace n=Tx_News_ViewHelpers}
-{namespace e=Tx_RoqNewsevent_ViewHelpers}
+{namespace n=GeorgRinger\News\ViewHelpers}
+{namespace e=Roquin\RoqNewsevent\ViewHelpers}
 
 BEGIN:VEVENT
 SUMMARY:<n:format.striptags>{newsItem.title}</n:format.striptags>

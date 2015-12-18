@@ -4,11 +4,11 @@ config.tx_extbase {
         classes {
             GeorgRinger\News\Domain\Model\News {
                 subclasses {
-                    Tx_RoqNewsevent_Event = Tx_RoqNewsevent_Domain_Model_Event
+                    Tx_RoqNewsevent_Event = Roquin\RoqNewsevent\Domain\Model\Event
           		}
             }
 
-            Tx_RoqNewsevent_Domain_Model_Event {
+			Roquin\RoqNewsevent\Domain\Model\Event {
                 mapping {
                     tableName = tx_news_domain_model_news
 
@@ -27,7 +27,7 @@ config.tx_extbase {
 
     objects {
         GeorgRinger\News\Controller\NewsController {
-         className = Tx_RoqNewsevent_Controller_EventController
+         className = Roquin\RoqNewsevent\Controller\EventController
         }
     }
 }
