@@ -7,8 +7,8 @@
  * @file:           EventLinkViewHelper.php
  * @description:    ViewHelper to render proper links for event detail view
  */
-
-class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_LinkViewHelper {
+class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_LinkViewHelper
+{
 
     /**
      * Render link to news item or internal/external pages
@@ -20,8 +20,13 @@ class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_Lin
      *
      * @return string $link
      */
-    public function render(Tx_RoqNewsevent_Domain_Model_Event $newsItem, array $settings = array(), $uriOnly = FALSE, $configuration = array()) {
-        if(!$newsItem->getIsEvent()) {
+    public function render(
+        Tx_RoqNewsevent_Domain_Model_Event $newsItem,
+        array $settings = array(),
+        $uriOnly = false,
+        $configuration = array()
+    ) {
+        if (!$newsItem->getIsEvent()) {
             return parent::render($newsItem, $settings, $uriOnly, $configuration);
         }
 
@@ -45,14 +50,16 @@ class Tx_RoqNewsevent_ViewHelpers_LinkViewHelper extends Tx_News_ViewHelpers_Lin
                 $tsSettings['link']['skipControllerAndAction'] = 1;
                 $configuration['additionalParams'] .= '&tx_news_pi1[controller]=Event&tx_news_pi1[action]=eventDetail';
 
-                if($settings['event']['detailPid']) {
+                if ($settings['event']['detailPid']) {
                     $tsSettings['defaultDetailPid'] = $settings['event']['detailPid'];
                     $tsSettings['detailPidDetermination'] = 'default';
                 }
                 $configuration = $this->getLinkToNewsItem($newsItem, $tsSettings, $configuration);
         }
         if (isset($tsSettings['link']['typesOpeningInNewWindow'])) {
-            if (\TYPO3\CMS\Core\Utility\GeneralUtility::inList($tsSettings['link']['typesOpeningInNewWindow'], $newsType)) {
+            if (\TYPO3\CMS\Core\Utility\GeneralUtility::inList($tsSettings['link']['typesOpeningInNewWindow'],
+                $newsType)
+            ) {
                 $this->tag->addAttribute('target', '_blank');
             }
         }

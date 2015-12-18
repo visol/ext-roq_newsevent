@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 
+ *  (c) 2012
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,181 +30,196 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\News {
+class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\News
+{
 
     /**
-   	 * Is event
-   	 *
-   	 * @var boolean
-   	 */
-   	protected $isEvent = FALSE;
+     * Is event
+     *
+     * @var boolean
+     */
+    protected $isEvent = false;
 
-	/**
-	 * Event start date
-	 *
-	 * @var DateTime
-	 * @validate NotEmpty
-	 */
-	protected $eventStartdate;
+    /**
+     * Event start date
+     *
+     * @var DateTime
+     * @validate NotEmpty
+     */
+    protected $eventStartdate;
 
-	/**
-	 * Event start time
-	 *
-	 * @var DateTime
-	 */
-	protected $eventStarttime;
+    /**
+     * Event start time
+     *
+     * @var DateTime
+     */
+    protected $eventStarttime;
 
-	/**
-	 * Event end date
-	 *
-	 * @var DateTime
-	 */
-	protected $eventEnddate;
+    /**
+     * Event end date
+     *
+     * @var DateTime
+     */
+    protected $eventEnddate;
 
-	/**
-	 * Event end time
-	 *
-	 * @var DateTime
-	 */
-	protected $eventEndtime;
+    /**
+     * Event end time
+     *
+     * @var DateTime
+     */
+    protected $eventEndtime;
 
-	/**
-	 * Even location (City, County)
-	 *
-	 * @var string
-	 */
+    /**
+     * Even location (City, County)
+     *
+     * @var string
+     */
 
     protected $eventLocation;
 
-   	/**
-   	 * Returns the isEvent
-   	 *
-   	 * @return boolean $isEvent
-   	 */
-   	public function getIsEvent() {
-   		return $this->isEvent;
-   	}
+    /**
+     * Returns the isEvent
+     *
+     * @return boolean $isEvent
+     */
+    public function getIsEvent()
+    {
+        return $this->isEvent;
+    }
 
-   	/**
-   	 * Sets the isEvent
-   	 *
-   	 * @param boolean $isEvent
-   	 * @return void
-   	 */
-   	public function setIsEvent($isEvent) {
-   		$this->isEvent = $isEvent;
-   	}
+    /**
+     * Sets the isEvent
+     *
+     * @param boolean $isEvent
+     * @return void
+     */
+    public function setIsEvent($isEvent)
+    {
+        $this->isEvent = $isEvent;
+    }
 
-   	/**
-   	 * Returns the boolean state of isEvent
-   	 *
-   	 * @return boolean
-   	 */
-   	public function isIsEvent() {
-   		return $this->getIsEvent();
-   	}
+    /**
+     * Returns the boolean state of isEvent
+     *
+     * @return boolean
+     */
+    public function isIsEvent()
+    {
+        return $this->getIsEvent();
+    }
 
-	/**
-	 * Returns the eventStartdate
-	 *
-	 * @return DateTime $eventStartdate
-	 */
-	public function getEventStartdate() {
-		return $this->eventStartdate;
-	}
+    /**
+     * Returns the eventStartdate
+     *
+     * @return DateTime $eventStartdate
+     */
+    public function getEventStartdate()
+    {
+        return $this->eventStartdate;
+    }
 
-	/**
-	 * Sets the eventStartdate
-	 *
-	 * @param DateTime $eventStartdate
-	 * @return void
-	 */
-	public function setEventStartdate($eventStartdate) {
-		$this->eventStartdate = $eventStartdate;
-	}
+    /**
+     * Sets the eventStartdate
+     *
+     * @param DateTime $eventStartdate
+     * @return void
+     */
+    public function setEventStartdate($eventStartdate)
+    {
+        $this->eventStartdate = $eventStartdate;
+    }
 
-	/**
-	 * Returns the eventStarttime
-	 *
-	 * @return DateTime $eventStarttime
-	 */
-	public function getEventStarttime() {
-		return $this->eventStarttime;
-	}
+    /**
+     * Returns the eventStarttime
+     *
+     * @return DateTime $eventStarttime
+     */
+    public function getEventStarttime()
+    {
+        return $this->eventStarttime;
+    }
 
-	/**
-	 * Sets the eventStarttime
-	 *
-	 * @param DateTime $eventStarttime
-	 * @return void
-	 */
-	public function setEventStarttime($eventStarttime) {
-		$this->eventStarttime = $eventStarttime;
-	}
+    /**
+     * Sets the eventStarttime
+     *
+     * @param DateTime $eventStarttime
+     * @return void
+     */
+    public function setEventStarttime($eventStarttime)
+    {
+        $this->eventStarttime = $eventStarttime;
+    }
 
-	/**
-	 * Returns the eventEnddate
-	 *
-	 * @return DateTime $eventEnddate
-	 */
-	public function getEventEnddate() {
-		return $this->eventEnddate;
-	}
+    /**
+     * Returns the eventEnddate
+     *
+     * @return DateTime $eventEnddate
+     */
+    public function getEventEnddate()
+    {
+        return $this->eventEnddate;
+    }
 
-	/**
-	 * Sets the eventEnddate
-	 *
-	 * @param DateTime $eventEnddate
-	 * @return void
-	 */
-	public function setEventEnddate($eventEnddate) {
-		$this->eventEnddate = $eventEnddate;
-	}
+    /**
+     * Sets the eventEnddate
+     *
+     * @param DateTime $eventEnddate
+     * @return void
+     */
+    public function setEventEnddate($eventEnddate)
+    {
+        $this->eventEnddate = $eventEnddate;
+    }
 
-	/**
-	 * Returns the eventEndtime
-	 *
-	 * @return DateTime $eventEndtime
-	 */
-	public function getEventEndtime() {
-		return $this->eventEndtime;
-	}
+    /**
+     * Returns the eventEndtime
+     *
+     * @return DateTime $eventEndtime
+     */
+    public function getEventEndtime()
+    {
+        return $this->eventEndtime;
+    }
 
-	/**
-	 * Sets the eventEndtime
-	 *
-	 * @param DateTime $eventEndtime
-	 * @return void
-	 */
-	public function setEventEndtime($eventEndtime) {
-		$this->eventEndtime = $eventEndtime;
-	}
+    /**
+     * Sets the eventEndtime
+     *
+     * @param DateTime $eventEndtime
+     * @return void
+     */
+    public function setEventEndtime($eventEndtime)
+    {
+        $this->eventEndtime = $eventEndtime;
+    }
 
-	/**
-	 * Returns the eventLocation
-	 *
-	 * @return string $eventLocation
-	 */
-	public function getEventLocation() {
-		return $this->eventLocation;
-	}
+    /**
+     * Returns the eventLocation
+     *
+     * @return string $eventLocation
+     */
+    public function getEventLocation()
+    {
+        return $this->eventLocation;
+    }
 
-	/**
-	 * Sets the eventLocation
-	 *
-	 * @param string $eventLocation
-	 * @return void
-	 */
-	public function setEventLocation($eventLocation) {
-		$this->eventLocation = $eventLocation;
-	}
+    /**
+     * Sets the eventLocation
+     *
+     * @param string $eventLocation
+     * @return void
+     */
+    public function setEventLocation($eventLocation)
+    {
+        $this->eventLocation = $eventLocation;
+    }
 
     /**
      * Get year of eventStartdate
      *
      * @return integer
      */
-    public function getYearOfEventStartdate() {
+    public function getYearOfEventStartdate()
+    {
         return $this->getEventStartdate()->format('Y');
     }
 
@@ -213,7 +228,8 @@ class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\
      *
      * @return integer
      */
-    public function getMonthOfEventStartdate() {
+    public function getMonthOfEventStartdate()
+    {
         return $this->getEventStartdate()->format('m');
     }
 
@@ -222,9 +238,11 @@ class Tx_RoqNewsevent_Domain_Model_Event extends \GeorgRinger\News\Domain\Model\
      *
      * @return integer
      */
-    public function getDayOfEventStartdate() {
+    public function getDayOfEventStartdate()
+    {
         return $this->getEventStartdate()->format('d');
     }
 
 }
+
 ?>

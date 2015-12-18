@@ -19,28 +19,30 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @see TrimViewHelper
  * @author Lorenz Ulrich <lorenz.ulrich@visol.ch>
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_NewlineToNewlineTagViewHelper extends AbstractViewHelper {
+class Tx_RoqNewsevent_ViewHelpers_Format_NewlineToNewlineTagViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @param string $content
-	 * @return string
-	 */
-	public function render($content = NULL) {
-		if (NULL === $content) {
-			$content = $this->renderChildren();
-		}
-		$contentArray = explode(PHP_EOL, $content);
-		$returnContent = '';
-		$i = 0;
-		foreach ($contentArray as $line) {
-			if ($i > 0) {
-				$returnContent .= '<newline />';
-			}
-			$returnContent .= $line;
-			$i++;
-		}
-		return $returnContent;
+    /**
+     * @param string $content
+     * @return string
+     */
+    public function render($content = null)
+    {
+        if (null === $content) {
+            $content = $this->renderChildren();
+        }
+        $contentArray = explode(PHP_EOL, $content);
+        $returnContent = '';
+        $i = 0;
+        foreach ($contentArray as $line) {
+            if ($i > 0) {
+                $returnContent .= '<newline />';
+            }
+            $returnContent .= $line;
+            $i++;
+        }
+        return $returnContent;
 
-	}
+    }
 
 }

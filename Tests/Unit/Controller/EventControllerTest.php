@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 
+ *  (c) 2012
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,26 +34,31 @@
  * @subpackage News event
  *
  */
-class Tx_Roq_newsevent_Controller_EventControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_RoqNewsevent_Domain_Model_Event
-	 */
-	protected $fixture;
+class Tx_Roq_newsevent_Controller_EventControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+{
+    /**
+     * @var Tx_RoqNewsevent_Domain_Model_Event
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = new Tx_RoqNewsevent_Domain_Model_Event();
-	}
+    public function setUp()
+    {
+        $this->fixture = new Tx_RoqNewsevent_Domain_Model_Event();
+    }
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
 
-	/**
-	 * @test
-	 */
-	public function dummyMethod() {
-		$this->markTestIncomplete();
-	}
+    /**
+     * @test
+     */
+    public function dummyMethod()
+    {
+        $this->markTestIncomplete();
+    }
 
 }
+
 ?>

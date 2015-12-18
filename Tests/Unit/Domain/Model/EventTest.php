@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 
+ *  (c) 2012
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,98 +34,123 @@
  * @subpackage News event
  *
  */
-class Tx_RoqNewsevent_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_RoqNewsevent_Domain_Model_Event
-	 */
-	protected $fixture;
+class Tx_RoqNewsevent_Domain_Model_EventTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+{
+    /**
+     * @var Tx_RoqNewsevent_Domain_Model_Event
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = new Tx_RoqNewsevent_Domain_Model_Event();
-	}
+    public function setUp()
+    {
+        $this->fixture = new Tx_RoqNewsevent_Domain_Model_Event();
+    }
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
 
-	/**
-	 * @test
-	 */
-	public function getIsEventReturnsInitialValueForBoolean() { 
-		$this->assertSame(
-			TRUE,
-			$this->fixture->getIsEvent()
-		);
-	}
+    /**
+     * @test
+     */
+    public function getIsEventReturnsInitialValueForBoolean()
+    {
+        $this->assertSame(
+            true,
+            $this->fixture->getIsEvent()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setIsEventForBooleanSetsIsEvent() { 
-		$this->fixture->setIsEvent(TRUE);
+    /**
+     * @test
+     */
+    public function setIsEventForBooleanSetsIsEvent()
+    {
+        $this->fixture->setIsEvent(true);
 
-		$this->assertSame(
-			TRUE,
-			$this->fixture->getIsEvent()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getEventStartdateReturnsInitialValueForDate() { }
+        $this->assertSame(
+            true,
+            $this->fixture->getIsEvent()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEventStartdateForDateSetsEventStartdate() { }
-	
-	/**
-	 * @test
-	 */
-	public function getEventStarttimeReturnsInitialValueForInt() { }
+    /**
+     * @test
+     */
+    public function getEventStartdateReturnsInitialValueForDate()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEventStarttimeForIntSetsEventStarttime() { }
-	
-	/**
-	 * @test
-	 */
-	public function getEventEnddateReturnsInitialValueForDate() { }
+    /**
+     * @test
+     */
+    public function setEventStartdateForDateSetsEventStartdate()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEventEnddateForDateSetsEventEnddate() { }
-	
-	/**
-	 * @test
-	 */
-	public function getEventEndtimeReturnsInitialValueForInt() { }
+    /**
+     * @test
+     */
+    public function getEventStarttimeReturnsInitialValueForInt()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEventEndtimeForIntSetsEventEndtime() { }
-	
-	/**
-	 * @test
-	 */
-	public function getEventLocationReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setEventStarttimeForIntSetsEventStarttime()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEventLocationForStringSetsEventLocation() { 
-		$this->fixture->setEventLocation('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getEventEnddateReturnsInitialValueForDate()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getEventLocation()
-		);
-	}
-	
+    /**
+     * @test
+     */
+    public function setEventEnddateForDateSetsEventEnddate()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function getEventEndtimeReturnsInitialValueForInt()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setEventEndtimeForIntSetsEventEndtime()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function getEventLocationReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setEventLocationForStringSetsEventLocation()
+    {
+        $this->fixture->setEventLocation('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getEventLocation()
+        );
+    }
+
 }
+
 ?>

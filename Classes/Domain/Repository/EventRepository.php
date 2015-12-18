@@ -13,7 +13,8 @@
  * @subpackage roq_newsevent
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News\Domain\Repository\NewsRepository {
+class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News\Domain\Repository\NewsRepository
+{
 
     /**
      * Returns the constraint to determine if a news event is active or not (archived)
@@ -21,13 +22,14 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
      * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
      * @return Tx_Extbase_Persistence_QOM_Constraint $constraint
      */
-    protected function createIsActiveConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query) {
+    protected function createIsActiveConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query)
+    {
         /** @var $constraint Tx_Extbase_Persistence_QOM_Constraint */
-        $constraint = NULL;
-        $timestamp  = time(); // + date('Z');
+        $constraint = null;
+        $timestamp = time(); // + date('Z');
 
         $constraint = $query->logicalOr(
-            // future events:
+        // future events:
             $query->greaterThan('tx_roqnewsevent_startdate + tx_roqnewsevent_starttime', $timestamp),
             // current multiple day events:
             $query->logicalAnd(
@@ -42,11 +44,11 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
             ),
             // current single day event without time:
             $query->logicalAnd(
-				$query->greaterThan('tx_roqnewsevent_startdate + 86399', $timestamp),
-				$query->equals('tx_roqnewsevent_starttime', 0),
-				$query->equals('tx_roqnewsevent_enddate', 0),
-				$query->equals('tx_roqnewsevent_endtime', 0)
-			)
+                $query->greaterThan('tx_roqnewsevent_startdate + 86399', $timestamp),
+                $query->equals('tx_roqnewsevent_starttime', 0),
+                $query->equals('tx_roqnewsevent_enddate', 0),
+                $query->equals('tx_roqnewsevent_endtime', 0)
+            )
         );
 
         return $constraint;
@@ -59,8 +61,11 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    protected function createConstraintsFromDemand(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query, \GeorgRinger\News\Domain\Model\DemandInterface $demand) {
-        $constraints    = array();
+    protected function createConstraintsFromDemand(
+        \TYPO3\CMS\Extbase\Persistence\QueryInterface $query,
+        \GeorgRinger\News\Domain\Model\DemandInterface $demand
+    ) {
+        $constraints = array();
 
         if ($demand->getCategories() && $demand->getCategories() !== '0') {
             $constraints[] = $this->createCategoryConstraint(
@@ -141,7 +146,7 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
 
         // storage page
         if ($demand->getStoragePage() != 0) {
-            $pidList = \TYPO3\CMS\Core\Utility\GeneralUtility::intExplode(',', $demand->getStoragePage(), TRUE);
+            $pidList = \TYPO3\CMS\Core\Utility\GeneralUtility::intExplode(',', $demand->getStoragePage(), true);
             $constraints[] = $query->in('pid', $pidList);
         }
 
@@ -194,18 +199,18 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
             );
         }
 
-            // events only
+        // events only
         $constraints[] = $query->logicalAnd($query->equals('tx_roqnewsevent_is_event', 1));
 
-            // the event must have an event start date
+        // the event must have an event start date
         $constraints[] = $query->logicalAnd(
             $query->logicalNot(
                 $query->equals('tx_roqnewsevent_startdate', 0)
             )
         );
 
-            // Clean not used constraints
-        foreach($constraints as $key => $value) {
+        // Clean not used constraints
+        foreach ($constraints as $key => $value) {
             if (is_null($value)) {
                 unset($constraints[$key]);
             }
@@ -214,4 +219,5 @@ class Tx_RoqNewsevent_Domain_Repository_EventRepository extends GeorgRinger\News
         return $constraints;
     }
 }
+
 ?>

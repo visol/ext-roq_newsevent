@@ -28,84 +28,86 @@
  * @package TYPO3
  * @subpackage tx_news
  */
-class Tx_Roqnewsevent_Hooks_CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView {
+class Tx_Roqnewsevent_Hooks_CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView
+{
 
-	/**
-	 * Path to the locallang file
-	 * @var string
-	 */
-	const LLPATH_NEWSEVENT = 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_be.xml:';
+    /**
+     * Path to the locallang file
+     * @var string
+     */
+    const LLPATH_NEWSEVENT = 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_be.xml:';
 
-	/**
-	 * Returns information about this extension's pi1 plugin
-	 *
-	 * @param array $params Parameters to the hook
-	 * @return string Information about pi1 plugin
-	 */
-	public function getExtensionSummary(array $params) {
-		$result = $actionTranslationKey = '';
+    /**
+     * Returns information about this extension's pi1 plugin
+     *
+     * @param array $params Parameters to the hook
+     * @return string Information about pi1 plugin
+     */
+    public function getExtensionSummary(array $params)
+    {
+        $result = $actionTranslationKey = '';
 
-		if ($params['row']['list_type'] == self::KEY . '_pi1') {
-			$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
+        if ($params['row']['list_type'] == self::KEY . '_pi1') {
+            $this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
 
-			// if flexform data is found
-			$actions = $this->getFieldFromFlexform('switchableControllerActions');
-			if (!empty($actions)) {
-				$actionList = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $actions);
+            // if flexform data is found
+            $actions = $this->getFieldFromFlexform('switchableControllerActions');
+            if (!empty($actions)) {
+                $actionList = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $actions);
 
-				// translate the first action into its translation
-				$actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
-				$actionTranslation = $GLOBALS['LANG']->sL(self::LLPATH_NEWSEVENT . 'flexforms_general.mode.' . $actionTranslationKey);
+                // translate the first action into its translation
+                $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
+                $actionTranslation = $GLOBALS['LANG']->sL(self::LLPATH_NEWSEVENT . 'flexforms_general.mode.' . $actionTranslationKey);
 
-				$result .= '<pre>' . $actionTranslation . '</pre>';
+                $result .= '<pre>' . $actionTranslation . '</pre>';
 
-			} else {
-				$result = $GLOBALS['LANG']->sL(self::LLPATH . 'flexforms_general.mode.not_configured');
-			}
+            } else {
+                $result = $GLOBALS['LANG']->sL(self::LLPATH . 'flexforms_general.mode.not_configured');
+            }
 
-			if (is_array($this->flexformData)) {
+            if (is_array($this->flexformData)) {
 
-				switch ($actionTranslationKey) {
-					case 'news_list':
-					case 'news_detail':
-					case 'news_datemenu':
-					case 'category_list':
-					case 'tag_list':
-						return '';
-					case 'news_eventlist':
-						$this->getStartingPoint();
-						$this->getTimeRestrictionSetting();
-						$this->getTopNewsRestrictionSetting();
-						$this->getOrderSettings();
-						$this->getCategorySettings();
-						$this->getArchiveSettings();
-						$this->getOffsetLimitSettings();
-						$this->getDetailPidSetting();
-						$this->getListPidSetting();
-						break;
-					case 'news_eventdetail':
-						$this->getSingleNewsSettings();
-						$this->getDetailPidSetting();
-						break;
-					case 'news_eventdatemenu':
-						$this->getStartingPoint();
-						$this->getTimeRestrictionSetting();
-						$this->getTopNewsRestrictionSetting();
-						$this->getDateMenuSettings();
-						$this->getCategorySettings();
-						break;
-					default:
-				}
+                switch ($actionTranslationKey) {
+                    case 'news_list':
+                    case 'news_detail':
+                    case 'news_datemenu':
+                    case 'category_list':
+                    case 'tag_list':
+                        return '';
+                    case 'news_eventlist':
+                        $this->getStartingPoint();
+                        $this->getTimeRestrictionSetting();
+                        $this->getTopNewsRestrictionSetting();
+                        $this->getOrderSettings();
+                        $this->getCategorySettings();
+                        $this->getArchiveSettings();
+                        $this->getOffsetLimitSettings();
+                        $this->getDetailPidSetting();
+                        $this->getListPidSetting();
+                        break;
+                    case 'news_eventdetail':
+                        $this->getSingleNewsSettings();
+                        $this->getDetailPidSetting();
+                        break;
+                    case 'news_eventdatemenu':
+                        $this->getStartingPoint();
+                        $this->getTimeRestrictionSetting();
+                        $this->getTopNewsRestrictionSetting();
+                        $this->getDateMenuSettings();
+                        $this->getCategorySettings();
+                        break;
+                    default:
+                }
 
-				// for all views
-				$this->getOverrideDemandSettings();
-				$this->getTemplateLayoutSettings($params['row']['pid']);
+                // for all views
+                $this->getOverrideDemandSettings();
+                $this->getTemplateLayoutSettings($params['row']['pid']);
 
-				$result .= $this->renderSettingsAsTable();
-			}
-		}
+                $result .= $this->renderSettingsAsTable();
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
 }

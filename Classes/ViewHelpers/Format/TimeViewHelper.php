@@ -84,36 +84,39 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_RoqNewsevent_ViewHelpers_Format_TimeViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper
+{
 
-	/**
-	 * Render the supplied DateTime object as a formatted date.
-	 *
-	 * @param mixed $time either a DateTime object or a string that is accepted by DateTime constructor
-	 * @param string $format Format String which is taken to format the Date/Time
-	 * @return string Formatted time
-	 */
-	public function render($time = NULL, $format = 'H:i:s') {
-        $timeStamp      = NULL;
-        $timeZoneOffset = NULL;
+    /**
+     * Render the supplied DateTime object as a formatted date.
+     *
+     * @param mixed $time either a DateTime object or a string that is accepted by DateTime constructor
+     * @param string $format Format String which is taken to format the Date/Time
+     * @return string Formatted time
+     */
+    public function render($time = null, $format = 'H:i:s')
+    {
+        $timeStamp = null;
+        $timeZoneOffset = null;
 
-		if ($time === NULL) {
-			$time = $this->renderChildren();
-			if ($time === NULL) {
-				return '';
-			}
-		}
+        if ($time === null) {
+            $time = $this->renderChildren();
+            if ($time === null) {
+                return '';
+            }
+        }
 
-		if (!$time instanceof DateTime) {
-			try {
+        if (!$time instanceof DateTime) {
+            try {
                 $time = new DateTime($time);
-			} catch (Exception $exception) {
-				throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $time . '" could not be parsed by DateTime constructor.', 1241722579);
-			}
-		}
+            } catch (Exception $exception) {
+                throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $time . '" could not be parsed by DateTime constructor.',
+                    1241722579);
+            }
+        }
 
         $timeZoneOffset = $time->getTimezone()->getOffset($time);
-        $timeStamp      = $time->getTimestamp();
+        $timeStamp = $time->getTimestamp();
 
         return date($format, $timeStamp - $timeZoneOffset);
     }
