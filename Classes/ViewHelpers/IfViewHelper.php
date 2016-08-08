@@ -20,10 +20,13 @@ namespace Roquin\RoqNewsevent\ViewHelpers;
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * This view helper implements an if/else condition.
- * @see \TYPO3\CMS\Fluid\Core\Parser\SyntaxTree\ViewHelperNode::convertArgumentValue() to find see how boolean arguments are evaluated
+ *
+ * @see     Tx_Fluid_Core_Parser_SyntaxTree_ViewHelperNode::convertArgumentValue() to find see how boolean arguments are evaluated
  *
  * = Conditions =
  *
@@ -101,86 +104,53 @@ namespace Roquin\RoqNewsevent\ViewHelpers;
  */
 class IfViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
 {
-
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('condition', 'mixed', 'View helper condition expression, evaluated', true);
+
+        $this->registerArgument('condition', 'mixed', 'View helper condition expression, evaluated', TRUE);
     }
 
     /**
-     * renders <f:then> child if $condition is true, otherwise renders <f:else> child.
+     * @param array $arguments
      *
+     * @return bool
      * @throws \Exception
-     * @return string the rendered string
-     * @author Sebastian Kurfürst <sebastian@typo3.org>
-     * @author Bastian Waidelich <bastian@typo3.org>
-     * @api
      */
-    public function render()
+    public static function evaluateCondition($arguments = NULL)
     {
-        return $this->renderStatic(
-            $this->arguments,
-            $this->buildRenderChildrenClosure(),
-            $this->renderingContext
-        );
-    }
-
-    /**
-     * Default implementation for CompilableInterface. See CompilableInterface
-     * for a detailed description of this method.
-     *
-     * @param array                                                     $arguments
-     * @param \Closure                                                  $renderChildrenClosure
-     * @param \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
-     *
-     * @return mixed
-     * @throws \Exception
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext)
-    {
-        $hasEvaluatedChildNode = TRUE;
-
-        $condition = $arguments['condition'];
+        $condition = $arguments[ 'condition' ];
 
         if (is_null($condition)) {
-            return self::renderStaticElseChild($arguments, $hasEvaluatedChildNode);
-        } elseif ($condition === true) {
-            return self::renderStaticThenChild($arguments, $hasEvaluatedChildNode);
-        } elseif ($condition === false) {
-            return self::renderStaticElseChild($arguments, $hasEvaluatedChildNode);
+            return FALSE;
+        } elseif ($condition === TRUE) {
+            return TRUE;
+        } elseif ($condition === FALSE) {
+            return FALSE;
         } elseif (is_array($condition)) {
             return (count($condition) > 0);
         } elseif ($condition instanceof \Countable) {
             return (count($condition) > 0);
         } elseif (is_string($condition) && trim($condition) === '') {
             if (trim($condition) === '') {
-                return self::renderStaticElseChild($arguments, $hasEvaluatedChildNode);
-            } else {
-                if (preg_match('/[a-z^]/', $condition)) {
-                    $condition = '\'' . $condition . '\'';
-                }
+                return FALSE;
+            } else if (preg_match('/[a-z^]/', $condition)) {
+                $condition = '\'' . $condition . '\'';
             }
         } elseif (is_object($condition)) {
             if ($condition instanceof \Iterator && method_exists($condition, 'count')) {
-                return (call_user_method('count', $condition) > 0);
+                return (call_user_func('count', $condition) > 0);
+            } else if ($condition instanceof \DateTime) {
+                return TRUE;
+            } else if ($condition instanceof \stdClass) {
+                return TRUE;
             } else {
-                if ($condition instanceof \DateTime) {
-                    return self::renderStaticThenChild($arguments, $hasEvaluatedChildNode);
+                $access = GeneralUtility::makeInstance(ObjectAccess::class);
+                $propertiesCount = count($access->getGettableProperties($condition));
+                if ($propertiesCount > 0) {
+                    return TRUE;
                 } else {
-                    if ($condition instanceof \stdClass) {
-                        return self::renderStaticThenChild($arguments, $hasEvaluatedChildNode);
-                    } else {
-                        $access = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Reflection\\ObjectAccess');
-                        $propertiesCount = count($access->getGettableProperties($condition));
-                        if ($propertiesCount > 0) {
-                            return self::renderStaticThenChild($arguments, $hasEvaluatedChildNode);
-                        } else {
-                            throw new \Exception('Unknown object type in IfViewHelper condition: ' . get_class($condition),
-                                                 1309493049);
-                        }
-                    }
+                    throw new \Exception('Unknown object type in IfViewHelper condition: ' . get_class($condition), 1309493049);
                 }
             }
         }
@@ -189,29 +159,21 @@ class IfViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionVie
         $singleQuoteCount = substr_count($condition, '\'');
         $escapedSingleQuoteCount = substr_count($condition, '\\\'');
         if ($rightParenthesisCount !== $leftParenthesisCount) {
-            throw new \Exception('Syntax error in IfViewHelper condition, mismatched number of opening and closing paranthesis',
-                                 1309490125);
+            throw new \Exception('Syntax error in IfViewHelper condition, mismatched number of opening and closing paranthesis', 1309490125);
         }
         if (($singleQuoteCount - $escapedSingleQuoteCount) % 2 != 0) {
-            throw new \Exception('Syntax error in IfViewHelper condition, mismatched number of unescaped single quotes',
-                                 1309490125);
+            throw new \Exception('Syntax error in IfViewHelper condition, mismatched number of unescaped single quotes', 1309490125);
         }
 
-        $evaluation = null;
+        $evaluation = NULL;
         $evaluationCondition = trim($condition, ';');
         $evaluationExpression = '$evaluation = (bool) (' . $evaluationCondition . ');';
 
         @eval($evaluationExpression);
-        if ($evaluation === null) {
-            throw new \Exception('Syntax error while analyzing computed IfViewHelper expression: ' . $evaluationExpression,
-                                 1309537403);
-            //return self::renderStaticElseChild($arguments, $hasEvaluatedChildNode);
-        } else {
-            if ($evaluation === true) {
-                return self::renderStaticThenChild($arguments, $hasEvaluatedChildNode);
-            } else {
-                return self::renderStaticElseChild($arguments, $hasEvaluatedChildNode);
-            }
+        if ($evaluation === NULL) {
+            throw new \Exception('Syntax error while analyzing computed IfViewHelper expression: ' . $evaluationExpression, 1309537403);
         }
+
+        return $evaluation;
     }
 }
