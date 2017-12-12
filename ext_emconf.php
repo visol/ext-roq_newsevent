@@ -10,12 +10,12 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'News event',
     'description' => 'Event extension based on the versatile news system. Supplies additional event functionality to news records.',
     'category' => 'plugin',
     'shy' => 0,
-    'version' => '3.3.0',
+    'version' => '3.4.0',
     'dependencies' => 'news',
     'conflicts' => '',
     'priority' => '',
@@ -33,17 +33,17 @@ $EM_CONF[$_EXTKEY] = array(
     'CGLcompliance' => null,
     'CGLcompliance_note' => null,
     'constraints' =>
-        array(
+        [
             'depends' =>
-                array(
-                    'typo3' => '6.2.0-6.2.99',
-                    'news' => '3.2.0-3.99.99',
-                ),
+                [
+                    'typo3' => '8.7.0-8.7.99',
+                    'news' => '6.1.0-',
+                ],
             'conflicts' =>
-                array(),
+                [],
             'suggests' =>
-                array(),
-        ),
+                [],
+        ],
     'suggests' =>
-        array(),
-);
+        [],
+];
