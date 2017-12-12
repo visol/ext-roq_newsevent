@@ -1,4 +1,5 @@
 <?php
+
 namespace Roquin\RoqNewsevent\Hooks;
 
 /***************************************************************
@@ -24,92 +25,57 @@ namespace Roquin\RoqNewsevent\Hooks;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use GeorgRinger\News\Hooks\PageLayoutView;
+
 /**
  * Hook to display verbose information about pi1 plugin in Web>Page module
  *
  * @package TYPO3
  * @subpackage tx_news
  */
-class CmsLayout extends \GeorgRinger\News\Hooks\PageLayoutView
+class CmsLayout
 {
-
-    /**
-     * Path to the locallang file
-     * @var string
-     */
-    const LLPATH_NEWSEVENT = 'LLL:EXT:roq_newsevent/Resources/Private/Language/locallang_be.xml:';
 
     /**
      * Returns information about this extension's pi1 plugin
      *
      * @param array $params Parameters to the hook
+     * @param PageLayoutView $pageLayoutView
      * @return string Information about pi1 plugin
      */
-    public function getExtensionSummary(array $params)
+    public function extensionSummary(array $params, PageLayoutView $pageLayoutView)
     {
-        $result = $actionTranslationKey = '';
-
-        if ($params['row']['list_type'] == self::KEY . '_pi1') {
-            $this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
-
-            // if flexform data is found
-            $actions = $this->getFieldFromFlexform('switchableControllerActions');
-            if (!empty($actions)) {
-                $actionList = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(';', $actions);
-
-                // translate the first action into its translation
-                $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
-                $actionTranslation = $GLOBALS['LANG']->sL(self::LLPATH_NEWSEVENT . 'flexforms_general.mode.' . $actionTranslationKey);
-
-                $result .= '<pre>' . $actionTranslation . '</pre>';
-
-            } else {
-                $result = $GLOBALS['LANG']->sL(self::LLPATH . 'flexforms_general.mode.not_configured');
-            }
-
-            if (is_array($this->flexformData)) {
-
-                switch ($actionTranslationKey) {
-                    case 'news_list':
-                    case 'news_detail':
-                    case 'news_datemenu':
-                    case 'category_list':
-                    case 'tag_list':
-                        return '';
-                    case 'news_eventlist':
-                        $this->getStartingPoint();
-                        $this->getTimeRestrictionSetting();
-                        $this->getTopNewsRestrictionSetting();
-                        $this->getOrderSettings();
-                        $this->getCategorySettings();
-                        $this->getArchiveSettings();
-                        $this->getOffsetLimitSettings();
-                        $this->getDetailPidSetting();
-                        $this->getListPidSetting();
-                        break;
-                    case 'news_eventdetail':
-                        $this->getSingleNewsSettings();
-                        $this->getDetailPidSetting();
-                        break;
-                    case 'news_eventdatemenu':
-                        $this->getStartingPoint();
-                        $this->getTimeRestrictionSetting();
-                        $this->getTopNewsRestrictionSetting();
-                        $this->getDateMenuSettings();
-                        $this->getCategorySettings();
-                        break;
-                    default:
-                }
-
-                // for all views
-                $this->getOverrideDemandSettings();
-                $this->getTemplateLayoutSettings($params['row']['pid']);
-
-                $result .= $this->renderSettingsAsTable();
-            }
+        switch ($params['action']) {
+            case 'news_eventlist':
+                $pageLayoutView->getStartingPoint();
+                $pageLayoutView->getCategorySettings();
+                $pageLayoutView->getDetailPidSetting();
+                $pageLayoutView->getTimeRestrictionSetting();
+                $pageLayoutView->getTemplateLayoutSettings($params['row']['pid']);
+                $pageLayoutView->getArchiveSettings();
+                $pageLayoutView->getTopNewsRestrictionSetting();
+                $pageLayoutView->getOrderSettings();
+                $pageLayoutView->getOffsetLimitSettings();
+                $pageLayoutView->getListPidSetting();
+                $pageLayoutView->getTagRestrictionSetting();
+                break;
+            case 'news_eventdetail':
+                $pageLayoutView->getSingleNewsSettings();
+                $pageLayoutView->getDetailPidSetting();
+                $pageLayoutView->getTemplateLayoutSettings($params['row']['pid']);
+                break;
+            case 'news_eventdatemenu':
+                $pageLayoutView->getStartingPoint();
+                $pageLayoutView->getTimeRestrictionSetting();
+                $pageLayoutView->getTopNewsRestrictionSetting();
+                $pageLayoutView->getArchiveSettings();
+                $pageLayoutView->getDateMenuSettings();
+                $pageLayoutView->getCategorySettings();
+                $pageLayoutView->getTemplateLayoutSettings($params['row']['pid']);
+                break;
+            default:
         }
 
-        return $result;
     }
 
 }
