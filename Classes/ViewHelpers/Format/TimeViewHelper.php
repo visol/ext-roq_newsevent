@@ -112,7 +112,7 @@ class TimeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
             try {
                 $time = new \DateTime($time);
             } catch (\Exception $exception) {
-                throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('"' . $time . '" could not be parsed by DateTime constructor.',
+                throw new \TYPO3Fluid\Fluid\Core\ViewHelper\Exception('"' . $time . '" could not be parsed by DateTime constructor.',
                     1241722579);
             }
         }

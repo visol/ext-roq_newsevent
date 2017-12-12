@@ -1,4 +1,5 @@
 <?php
+
 namespace Roquin\RoqNewsevent\Domain\Model;
 
 /***************************************************************
@@ -41,7 +42,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Event start date
      *
-     * @var DateTime
+     * @var \DateTime
      * @validate NotEmpty
      */
     protected $eventStartdate;
@@ -49,21 +50,21 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Event start time
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $eventStarttime;
 
     /**
      * Event end date
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $eventEnddate;
 
     /**
      * Event end time
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $eventEndtime;
 
@@ -109,7 +110,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Returns the eventStartdate
      *
-     * @return DateTime $eventStartdate
+     * @return \DateTime $eventStartdate
      */
     public function getEventStartdate()
     {
@@ -119,7 +120,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Sets the eventStartdate
      *
-     * @param DateTime $eventStartdate
+     * @param \DateTime $eventStartdate
      * @return void
      */
     public function setEventStartdate($eventStartdate)
@@ -130,7 +131,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Returns the eventStarttime
      *
-     * @return DateTime $eventStarttime
+     * @return \DateTime $eventStarttime
      */
     public function getEventStarttime()
     {
@@ -140,7 +141,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Sets the eventStarttime
      *
-     * @param DateTime $eventStarttime
+     * @param \DateTime $eventStarttime
      * @return void
      */
     public function setEventStarttime($eventStarttime)
@@ -151,7 +152,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Returns the eventEnddate
      *
-     * @return DateTime $eventEnddate
+     * @return \DateTime $eventEnddate
      */
     public function getEventEnddate()
     {
@@ -161,7 +162,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Sets the eventEnddate
      *
-     * @param DateTime $eventEnddate
+     * @param \DateTime $eventEnddate
      * @return void
      */
     public function setEventEnddate($eventEnddate)
@@ -172,7 +173,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Returns the eventEndtime
      *
-     * @return DateTime $eventEndtime
+     * @return \DateTime $eventEndtime
      */
     public function getEventEndtime()
     {
@@ -182,7 +183,7 @@ class Event extends \GeorgRinger\News\Domain\Model\News
     /**
      * Sets the eventEndtime
      *
-     * @param DateTime $eventEndtime
+     * @param \DateTime $eventEndtime
      * @return void
      */
     public function setEventEndtime($eventEndtime)

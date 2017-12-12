@@ -8,8 +8,12 @@ namespace Roquin\RoqNewsevent\Controller;
  * @file:           EventController.php
  * @description:    News event Controller, extending functionality from the News Controller
  */
+use GeorgRinger\News\Utility\Cache;
+use GeorgRinger\News\Utility\Page;
 use Roquin\RoqNewsevent\Domain\Model\Event;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /**
  * @package TYPO3
@@ -20,8 +24,6 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
 {
 
     /**
-     * eventRepository
-     *
      * @var \Roquin\RoqNewsevent\Domain\Repository\EventRepository
      * @inject
      */
@@ -48,13 +50,13 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
      * Overrides setViewConfiguration: Use event view configuration instead of news view configuration if an event
      * controller action is used
      *
-     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+     * @param ViewInterface $view
      * @return void
      */
-    protected function setViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
+    protected function setViewConfiguration(ViewInterface $view)
     {
         $extbaseFrameworkConfiguration =
-            $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
         // Fetch the current controller action which is set in the news plugin
         $controllerConfigurationAction = implode(';',
@@ -76,14 +78,14 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
     /**
      * Override templateRootPath, layoutRootPath and/or partialRootPath of the news view with event specific settings
      *
-     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+     * @param ViewInterface $view
      * @return void
      */
-    protected function setEventViewConfiguration(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view)
+    protected function setEventViewConfiguration(ViewInterface $view)
     {
         // Template Path Override
         $extbaseFrameworkConfiguration =
-            $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
         if (isset($extbaseFrameworkConfiguration['view']['event']['templateRootPath'])
             && strlen($extbaseFrameworkConfiguration['view']['event']['templateRootPath']) > 0
@@ -145,7 +147,7 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
         }
 
         if ($settings['event']['startingpoint']) {
-            $demand->setStoragePage(\GeorgRinger\News\Utility\Page::extendPidListByChildren($settings['event']['startingpoint'],
+            $demand->setStoragePage(Page::extendPidListByChildren($settings['event']['startingpoint'],
                     $settings['recursive']));
         }
 
@@ -169,12 +171,12 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
             $dateField = 'eventStartdate';
         }
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'listPid' => ($this->settings['listPid'] ? $this->settings['listPid'] : $GLOBALS['TSFE']->id),
             'dateField' => $dateField,
             'events' => $eventRecords,
             'overwriteDemand' => $overwriteDemand,
-        ));
+        ]);
     }
 
     /**
@@ -194,12 +196,12 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
 
         $newsRecords = $this->eventRepository->findDemanded($demand);
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'news' => $newsRecords,
             'overwriteDemand' => $overwriteDemand,
-        ));
+        ]);
 
-        \GeorgRinger\News\Utility\Cache::addPageCacheTagsByDemandObject($demand);
+        Cache::addPageCacheTagsByDemandObject($demand);
     }
 
     /**
@@ -233,14 +235,14 @@ class EventController extends \GeorgRinger\News\Controller\NewsController
             $this->handleNoNewsFoundError($this->settings['detail']['errorHandling']);
         }
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'newsItem' => $event,
             'currentPage' => (int)$currentPage,
-        ));
+        ]);
 
-        \GeorgRinger\News\Utility\Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
+        Page::setRegisterProperties($this->settings['detail']['registerProperties'], $event);
         if ($event instanceof Event) {
-            \GeorgRinger\News\Utility\Cache::addCacheTagsByNewsRecords(array($event));
+            Cache::addCacheTagsByNewsRecords([$event]);
         }
     }
 }
