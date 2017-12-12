@@ -9,6 +9,12 @@ namespace Roquin\RoqNewsevent\Domain\Repository;
  * @description:    News event Repository, extending functionality from the News Repository
  */
 
+use GeorgRinger\News\Domain\Model\DemandInterface;
+use GeorgRinger\News\Domain\Model\Dto\NewsDemand;
+use GeorgRinger\News\Utility\ConstraintHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+
 /**
  * @package TYPO3
  * @subpackage roq_newsevent
@@ -20,10 +26,10 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
     /**
      * Returns the constraint to determine if a news event is active or not (archived)
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param QueryInterface $query
      * @return \TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface $constraint
      */
-    protected function createIsActiveConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query)
+    protected function createIsActiveConstraint(QueryInterface $query)
     {
         /** @var $constraint \TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface */
         $constraint = null;
@@ -56,17 +62,18 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \GeorgRinger\News\Domain\Model\DemandInterface $demand
+     * @param QueryInterface $query
+     * @param DemandInterface $demand
      * @return array
-     * @throws InvalidArgumentException
-     * @throws Exception
+     * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     protected function createConstraintsFromDemand(
-        \TYPO3\CMS\Extbase\Persistence\QueryInterface $query,
-        \GeorgRinger\News\Domain\Model\DemandInterface $demand
+        QueryInterface $query,
+        DemandInterface $demand
     ) {
-        $constraints = array();
+        /** @var NewsDemand $demand */
+        $constraints = [];
 
         if ($demand->getCategories() && $demand->getCategories() !== '0') {
             $constraints[] = $this->createCategoryConstraint(
@@ -81,12 +88,31 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
             $constraints[] = $query->equals('author', $demand->getAuthor());
         }
 
+        if ($demand->getTypes()) {
+            $constraints['author'] = $query->in('type', $demand->getTypes());
+        }
+
         // archived
+        // TODO visol: Unclear why we overwrite the original archived constraint here without replacement
         if ($demand->getArchiveRestriction() == 'archived') {
-            $constraints[] = $query->logicalNot($this->createIsActiveConstraint($query));
+            $constraints['archived'] = $query->logicalNot($this->createIsActiveConstraint($query));
             // non-archived (active)
         } elseif ($demand->getArchiveRestriction() == 'active') {
-            $constraints[] = $this->createIsActiveConstraint($query);
+            $constraints['archived'] = $this->createIsActiveConstraint($query);
+        }
+
+
+        // archived
+        if ($demand->getArchiveRestriction() == 'archived') {
+            $constraints['archived'] = $query->logicalAnd(
+                $query->lessThan('archive', $GLOBALS['EXEC_TIME']),
+                $query->greaterThan('archive', 0)
+            );
+        } elseif ($demand->getArchiveRestriction() == 'active') {
+            $constraints['active'] = $query->logicalOr(
+                $query->greaterThanOrEqual('archive', $GLOBALS['EXEC_TIME']),
+                $query->equals('archive', 0)
+            );
         }
 
         // Time restriction greater than or equal
@@ -94,22 +120,9 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
         $timeRestrictionField = (empty($timeRestrictionField)) ? 'datetime' : $timeRestrictionField;
 
         if ($demand->getTimeRestriction()) {
-            $timeLimit = 0;
-            // integer = timestamp
-            if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($demand->getTimeRestriction())) {
-                $timeLimit = $GLOBALS['EXEC_TIME'] - $demand->getTimeRestriction();
-            } else {
-                // try to check strtotime
-                $timeFromString = strtotime($demand->getTimeRestriction());
+            $timeLimit = ConstraintHelper::getTimeRestrictionLow($demand->getTimeRestriction());
 
-                if ($timeFromString) {
-                    $timeLimit = $timeFromString;
-                } else {
-                    throw new Exception('Time limit Low could not be resolved to an integer. Given was: ' . htmlspecialchars($timeLimit));
-                }
-            }
-
-            $constraints[] = $query->greaterThanOrEqual(
+            $constraints['timeRestrictionGreater'] = $query->greaterThanOrEqual(
                 $timeRestrictionField,
                 $timeLimit
             );
@@ -117,22 +130,9 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
 
         // Time restriction less than or equal
         if ($demand->getTimeRestrictionHigh()) {
-            $timeLimit = 0;
-            // integer = timestamp
-            if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($demand->getTimeRestrictionHigh())) {
-                $timeLimit = $GLOBALS['EXEC_TIME'] + $demand->getTimeRestrictionHigh();
-            } else {
-                // try to check strtotime
-                $timeFromString = strtotime($demand->getTimeRestrictionHigh());
+            $timeLimit = ConstraintHelper::getTimeRestrictionHigh($demand->getTimeRestrictionHigh());
 
-                if ($timeFromString) {
-                    $timeLimit = $timeFromString;
-                } else {
-                    throw new Exception('Time limit High could not be resolved to an integer. Given was: ' . htmlspecialchars($timeLimit));
-                }
-            }
-
-            $constraints[] = $query->lessThanOrEqual(
+            $constraints['timeRestrictionLess'] = $query->lessThanOrEqual(
                 $timeRestrictionField,
                 $timeLimit
             );
@@ -147,14 +147,14 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
 
         // storage page
         if ($demand->getStoragePage() != 0) {
-            $pidList = \TYPO3\CMS\Core\Utility\GeneralUtility::intExplode(',', $demand->getStoragePage(), true);
+            $pidList = GeneralUtility::intExplode(',', $demand->getStoragePage(), true);
             $constraints[] = $query->in('pid', $pidList);
         }
 
         // month & year OR year only
         if ($demand->getYear() > 0) {
             if (is_null($demand->getDateField())) {
-                throw new InvalidArgumentException('No Datefield is set, therefore no Datemenu is possible!');
+                throw new \InvalidArgumentException('No Datefield is set, therefore no Datemenu is possible!');
             }
             if ($demand->getMonth() > 0) {
                 if ($demand->getDay() > 0) {
@@ -176,11 +176,15 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
 
         // Tags
         $tags = $demand->getTags();
-        if ($tags) {
+        if ($tags && is_string($tags)) {
             $tagList = explode(',', $tags);
 
+            $subConstraints = [];
             foreach ($tagList as $singleTag) {
-                $constraints[] = $query->contains('tags', $singleTag);
+                $subConstraints[] = $query->contains('tags', $singleTag);
+            }
+            if (count($subConstraints) > 0) {
+                $constraints['tags'] = $query->logicalOr($subConstraints);
             }
         }
 
@@ -192,10 +196,21 @@ class EventRepository extends \GeorgRinger\News\Domain\Repository\NewsRepository
 
         // Exclude already displayed
         if ($demand->getExcludeAlreadyDisplayedNews() && isset($GLOBALS['EXT']['news']['alreadyDisplayed']) && !empty($GLOBALS['EXT']['news']['alreadyDisplayed'])) {
-            $constraints[] = $query->logicalNot(
+            $constraints['excludeAlreadyDisplayedNews'] = $query->logicalNot(
                 $query->in(
                     'uid',
                     $GLOBALS['EXT']['news']['alreadyDisplayed']
+                )
+            );
+        }
+
+        // Hide id list
+        $hideIdList = $demand->getHideIdList();
+        if ($hideIdList) {
+            $constraints['excludeAlreadyDisplayedNews'] = $query->logicalNot(
+                $query->in(
+                    'uid',
+                    GeneralUtility::intExplode(',', $hideIdList)
                 )
             );
         }
